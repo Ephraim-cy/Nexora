@@ -8,6 +8,7 @@ This build follows the master plan in `Nexora_Master_Plan.pdf` and keeps the fir
 
 - Expo SDK 56 app with Expo Router and native tabs.
 - Memory home screen with sample captures, category filtering, private-mode status, and local analysis results.
+- Local search screen with recent queries, scope filters, ranked results, and offline analysis details.
 - AI Architecture screen showing the free on-device path, premium cloud path, free tool stack, feature gates, and 26-week build roadmap.
 - Core architecture data and a deterministic offline analyzer in `src/core/ai/nexora-ai-architecture.ts`.
 - Route files kept thin under `src/app`, with feature screens under `src/features`.

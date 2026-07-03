@@ -2,70 +2,73 @@ import { Platform } from 'react-native';
 
 export const Colors = {
   // Theme foundation
-  darkBackground: '#03001e', // Very deep midnight blue/purple
-  electricViolet: '#7f00ff',
-  electricTeal: '#00f2fe',
+  darkBackground: '#040716',
+  electricViolet: '#6d5cff',
+  electricTeal: '#34d5ff',
+  auroraPink: '#f15bb5',
+  auroraGreen: '#4ade80',
+  auroraAmber: '#facc15',
   white: '#ffffff',
-  glassBorder: 'rgba(255, 255, 255, 0.08)',
-  glassTextSecondary: '#a5a6c9',
+  glassBorder: 'rgba(255, 255, 255, 0.12)',
+  glassTextSecondary: '#aab0d6',
 
   // Category gradients (Start/End colors for Smart Backgrounds & Cards)
   categories: {
     Study: {
-      gradient: ['#7f00ff', '#e100ff'] as [string, string],
+      gradient: ['#3f7cff', '#7c3cff'] as [string, string],
       icon: 'book',
-      color: '#c084fc',
+      color: '#8b8cff',
     },
     Finance: {
-      gradient: ['#11998e', '#38ef7d'] as [string, string],
+      gradient: ['#0f9b7a', '#4ade80'] as [string, string],
       icon: 'card',
       color: '#4ade80',
     },
     Travel: {
-      gradient: ['#00c6ff', '#0072ff'] as [string, string],
+      gradient: ['#00b8ff', '#345dff'] as [string, string],
       icon: 'airplane',
       color: '#38bdf8',
     },
     Work: {
-      gradient: ['#141e30', '#243b55'] as [string, string],
+      gradient: ['#27304f', '#775cff'] as [string, string],
       icon: 'briefcase',
-      color: '#94a3b8',
+      color: '#a5b4fc',
     },
     Shopping: {
-      gradient: ['#ff9966', '#ff5e62'] as [string, string],
+      gradient: ['#f15bb5', '#ff7a59'] as [string, string],
       icon: 'cart',
       color: '#fb7185',
     },
     Health: {
-      gradient: ['#ff4b1f', '#ff9068'] as [string, string],
+      gradient: ['#ff4d6d', '#ffb703'] as [string, string],
       icon: 'heart',
       color: '#f87171',
     },
     Personal: {
-      gradient: ['#f12711', '#f5af19'] as [string, string],
+      gradient: ['#f59e0b', '#22d3ee'] as [string, string],
       icon: 'person',
       color: '#fbbf24',
     },
     Media: {
-      gradient: ['#4facfe', '#00f2fe'] as [string, string],
+      gradient: ['#22d3ee', '#7c3cff'] as [string, string],
       icon: 'image',
       color: '#22d3ee',
     },
     General: {
-      gradient: ['#0f0c20', '#1c153b'] as [string, string],
+      gradient: ['#07112d', '#5a33d6'] as [string, string],
       icon: 'grid',
-      color: '#a78bfa',
+      color: '#8b8cff',
     },
   },
   
   // Custom dark mode theme overrides
   dark: {
     text: '#ffffff',
-    textSecondary: '#a5a6c9',
-    background: '#070517', // Midnight tone
-    glassBg: 'rgba(255, 255, 255, 0.03)',
-    glassBgHover: 'rgba(255, 255, 255, 0.06)',
-    cardBg: 'rgba(15, 12, 32, 0.6)',
+    textSecondary: '#aab0d6',
+    background: '#050816',
+    glassBg: 'rgba(11, 17, 42, 0.72)',
+    glassBgHover: 'rgba(255, 255, 255, 0.08)',
+    cardBg: 'rgba(12, 18, 43, 0.78)',
   },
   
   // Custom light mode theme overrides

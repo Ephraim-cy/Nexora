@@ -10,6 +10,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { Link, type Href } from 'expo-router';
 
 import {
   analyzeCaptureOffline,
@@ -27,6 +28,54 @@ import { Colors, Layout, Spacing, Typography } from '@/ui/theme';
 const activeFreeCapabilities = freeOnDeviceCapabilities.filter(
   (item) => item.status === 'built' || item.status === 'started',
 );
+
+const heroActions = [
+  {
+    label: 'Capture',
+    detail: 'Import a memory',
+    href: '/capture',
+    color: Colors.electricTeal,
+  },
+  {
+    label: 'AI Chat',
+    detail: 'Premium memory talk',
+    href: '/explore',
+    color: Colors.electricViolet,
+  },
+  {
+    label: 'Search',
+    detail: 'Find local memories',
+    href: '/search',
+    color: Colors.auroraGreen,
+  },
+  {
+    label: 'Privacy',
+    detail: 'Control the vault',
+    href: '/settings',
+    color: Colors.auroraAmber,
+  },
+] as const;
+
+const aiSuggestions = [
+  {
+    title: 'Review receipt drafts',
+    detail: '3 grocery and cafe totals are ready to confirm.',
+    meta: 'Finance',
+    color: Colors.categories.Finance.color,
+  },
+  {
+    title: 'Clean similar trip photos',
+    detail: '12 Dubai skyline shots can be grouped locally.',
+    meta: 'Gallery',
+    color: Colors.categories.Travel.color,
+  },
+  {
+    title: 'Build a study queue',
+    detail: 'Linear Algebra notes have 24 flashcard candidates.',
+    meta: 'Study',
+    color: Colors.categories.Study.color,
+  },
+] as const;
 
 export function MemoryHomeScreen() {
   const { width } = useWindowDimensions();
@@ -65,19 +114,76 @@ export function MemoryHomeScreen() {
         <View style={styles.hero}>
           <View style={styles.heroTitleBlock}>
             <Text style={styles.kicker} selectable>
-              NEXORA
+              Good morning
             </Text>
             <Text style={styles.title} selectable>
-              Your second brain. Fully yours.
+              What would you like to remember today?
             </Text>
             <Text style={styles.subtitle} selectable>
-              Free on-device AI handles everyday capture, organization, reminders, receipts, and
-              local search before anything ever reaches the cloud.
+              Capture, understand, organize, and search your life with free on-device AI first.
             </Text>
           </View>
           <View style={[styles.privacyBadge, { borderColor: activeColor }]}>
             <View style={[styles.badgeDot, { backgroundColor: activeColor }]} />
             <Text style={styles.privacyText}>Private Mode On</Text>
+          </View>
+        </View>
+
+        <View style={styles.commandPanel}>
+          <View style={styles.commandIcon}>
+            <View style={[styles.commandIconDot, { backgroundColor: activeColor }]} />
+          </View>
+          <Text style={styles.commandPlaceholder} numberOfLines={1} selectable>
+            Ask your memory anything...
+          </Text>
+          <View style={styles.commandAiBadge}>
+            <Text style={styles.commandAiText}>AI</Text>
+          </View>
+        </View>
+
+        <View style={[styles.heroActionGrid, isWide && styles.heroActionGridWide]}>
+          {heroActions.map((action) => (
+            <Link key={action.label} href={action.href as Href} asChild>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.heroAction,
+                  isWide && styles.heroActionWide,
+                  pressed && styles.pressed,
+                ]}
+              >
+                <View style={[styles.heroActionIcon, { backgroundColor: `${action.color}24` }]}>
+                  <View style={[styles.heroActionGlyph, { backgroundColor: action.color }]} />
+                </View>
+                <Text style={styles.heroActionLabel} selectable>
+                  {action.label}
+                </Text>
+                <Text style={styles.heroActionDetail} numberOfLines={2} selectable>
+                  {action.detail}
+                </Text>
+              </Pressable>
+            </Link>
+          ))}
+        </View>
+
+        <View style={styles.section}>
+          <SectionHeader title="AI Suggestions" detail="Local actions surfaced from your memories" />
+          <View style={[styles.suggestionGrid, isWide && styles.suggestionGridWide]}>
+            {aiSuggestions.map((suggestion) => (
+              <Panel key={suggestion.title} style={[styles.suggestionPanel, isWide && styles.suggestionPanelWide]}>
+                <View style={styles.suggestionHeader}>
+                  <View style={[styles.suggestionDot, { backgroundColor: suggestion.color }]} />
+                  <Text style={[styles.suggestionMeta, { color: suggestion.color }]} selectable>
+                    {suggestion.meta}
+                  </Text>
+                </View>
+                <Text style={styles.suggestionTitle} selectable>
+                  {suggestion.title}
+                </Text>
+                <Text style={styles.suggestionDetail} selectable>
+                  {suggestion.detail}
+                </Text>
+              </Panel>
+            ))}
           </View>
         </View>
 
@@ -432,6 +538,140 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fonts?.rounded,
     fontSize: Typography.sizes.sm,
     fontWeight: '700',
+  },
+  commandPanel: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    borderColor: 'rgba(255, 255, 255, 0.14)',
+    borderRadius: Layout.borderRadius.sm,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: Spacing.three,
+    minHeight: 54,
+    paddingHorizontal: Spacing.three,
+  },
+  commandIcon: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    borderRadius: Layout.borderRadius.sm,
+    height: 34,
+    justifyContent: 'center',
+    width: 34,
+  },
+  commandIconDot: {
+    borderRadius: 6,
+    height: 12,
+    width: 12,
+  },
+  commandPlaceholder: {
+    color: 'rgba(255, 255, 255, 0.62)',
+    flex: 1,
+    fontFamily: Typography.fonts?.text,
+    fontSize: Typography.sizes.base,
+  },
+  commandAiBadge: {
+    backgroundColor: `${Colors.electricViolet}30`,
+    borderColor: `${Colors.electricViolet}70`,
+    borderRadius: Layout.borderRadius.sm,
+    borderWidth: 1,
+    paddingHorizontal: Spacing.two,
+    paddingVertical: Spacing.one,
+  },
+  commandAiText: {
+    color: Colors.white,
+    fontFamily: Typography.fonts?.rounded,
+    fontSize: Typography.sizes.xs,
+    fontWeight: '800',
+  },
+  heroActionGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.three,
+  },
+  heroActionGridWide: {
+    flexWrap: 'nowrap',
+  },
+  heroAction: {
+    backgroundColor: 'rgba(6, 10, 31, 0.72)',
+    borderColor: 'rgba(255, 255, 255, 0.11)',
+    borderRadius: Layout.borderRadius.sm,
+    borderWidth: 1,
+    flexGrow: 1,
+    gap: Spacing.one,
+    minHeight: 116,
+    minWidth: 148,
+    padding: Spacing.three,
+    width: '47%',
+  },
+  heroActionWide: {
+    flex: 1,
+    width: undefined,
+  },
+  heroActionIcon: {
+    alignItems: 'center',
+    borderRadius: Layout.borderRadius.sm,
+    height: 38,
+    justifyContent: 'center',
+    marginBottom: Spacing.one,
+    width: 38,
+  },
+  heroActionGlyph: {
+    borderRadius: 7,
+    height: 14,
+    width: 14,
+  },
+  heroActionLabel: {
+    color: Colors.white,
+    fontFamily: Typography.fonts?.rounded,
+    fontSize: Typography.sizes.base,
+    fontWeight: '800',
+  },
+  heroActionDetail: {
+    color: 'rgba(255, 255, 255, 0.56)',
+    fontFamily: Typography.fonts?.text,
+    fontSize: Typography.sizes.sm,
+    lineHeight: 18,
+  },
+  suggestionGrid: {
+    gap: Spacing.three,
+  },
+  suggestionGridWide: {
+    flexDirection: 'row',
+  },
+  suggestionPanel: {
+    minHeight: 138,
+  },
+  suggestionPanelWide: {
+    flex: 1,
+  },
+  suggestionHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: Spacing.two,
+  },
+  suggestionDot: {
+    borderRadius: 5,
+    height: 10,
+    width: 10,
+  },
+  suggestionMeta: {
+    fontFamily: Typography.fonts?.rounded,
+    fontSize: Typography.sizes.xs,
+    fontWeight: '800',
+    textTransform: 'uppercase',
+  },
+  suggestionTitle: {
+    color: Colors.white,
+    fontFamily: Typography.fonts?.display,
+    fontSize: Typography.sizes.base,
+    fontWeight: '800',
+    lineHeight: 21,
+  },
+  suggestionDetail: {
+    color: 'rgba(255, 255, 255, 0.62)',
+    fontFamily: Typography.fonts?.text,
+    fontSize: Typography.sizes.sm,
+    lineHeight: 19,
   },
   statsGrid: {
     gap: Spacing.three,
